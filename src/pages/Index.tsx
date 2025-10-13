@@ -1,13 +1,28 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Hero } from "@/components/Hero";
+import { DashboardMetrics } from "@/components/DashboardMetrics";
+import { FatigueMonitor } from "@/components/FatigueMonitor";
+import { FeaturesSection } from "@/components/FeaturesSection";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="min-h-screen bg-background">
+      <Hero />
+      <DashboardMetrics />
+      <FatigueMonitor />
+      <FeaturesSection />
+      
+      {/* Footer */}
+      <footer className="py-12 px-6 border-t border-border bg-card/30">
+        <div className="container mx-auto text-center">
+          <p className="text-sm text-muted-foreground">
+            PanaAI – Performance Intelligence for Panathinaikos FC
+          </p>
+          <p className="text-xs text-muted-foreground mt-2">
+            Powered by AI • Built for Excellence
+          </p>
+        </div>
+      </footer>
+    </main>
   );
 };
 
