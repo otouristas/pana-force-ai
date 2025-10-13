@@ -5,7 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
+import Matches from "./pages/Matches";
+import Squad from "./pages/Squad";
 import NotFound from "./pages/NotFound";
+import { MobileNav, DesktopNav } from "./components/MobileNav";
 
 const queryClient = new QueryClient();
 
@@ -15,9 +18,13 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <DesktopNav />
+        <MobileNav />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/matches" element={<Matches />} />
+          <Route path="/squad" element={<Squad />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
