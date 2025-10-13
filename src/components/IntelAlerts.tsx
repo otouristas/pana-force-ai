@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bell, AlertTriangle, Info } from "lucide-react";
@@ -24,13 +24,14 @@ interface IntelAlertsProps {
 
 export function IntelAlerts({ limit = 5 }: IntelAlertsProps) {
   const [alerts, setAlerts] = useState<IntelAlert[]>([]);
-  const isEnabled = import.meta.env.VITE_FEATURE_INTEL_ALERTS === "true";
+  const isEnabled = true;
 
   useEffect(() => {
     if (!isEnabled) return;
     let isMounted = true;
 
     async function loadAlerts() {
+      if (!isSupabaseConfigured) { setAlerts([]); return; }
       const { data } = await supabase
         .from("intel_alerts")
         .select("id, event_id, severity, is_acknowledged, created_at, intel_events: event_id ( summary, event_type, confidence, urgency )")
@@ -55,6 +56,7 @@ export function IntelAlerts({ limit = 5 }: IntelAlertsProps) {
 
     void loadAlerts();
 
+    if (!isSupabaseConfigured) return;
     const channel = supabase
       .channel("intel-alerts")
       .on(
@@ -83,7 +85,20 @@ export function IntelAlerts({ limit = 5 }: IntelAlertsProps) {
             <span className="ml-2 rounded-full bg-primary text-primary-foreground text-xs px-2 py-0.5">{badgeCount}</span>
           )}
         </div>
-        <Button variant="ghost" size="sm" onClick={() => setAlerts([])}>Clear</Button>
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={() => setAlerts([])}>Clear</Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={async () => {
+              if (!isSupabaseConfigured) return;
+              const ids = alerts.map(a => a.id);
+              if (ids.length === 0) return;
+              await supabase.from('intel_alerts').update({ is_acknowledged: true }).in('id', ids);
+              setAlerts(prev => prev.map(a => ({ ...a, is_acknowledged: true })));
+            }}
+          >Ack</Button>
+        </div>
       </div>
       <div className="mt-3 space-y-2">
         {alerts.length === 0 ? (

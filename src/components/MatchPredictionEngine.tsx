@@ -9,6 +9,7 @@ import { mockXGTimeline, mockOppositionReport } from "@/utils/advancedMockData";
 import { AIFormattedText } from "./AIFormattedText";
 import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { computePreMatchWinProbability } from "@/lib/models/winProbability";
 
 interface MatchPredictionEngineProps {
   homeTeam: string;
@@ -26,6 +27,15 @@ export const MatchPredictionEngine = ({
   const [loading, setLoading] = useState(false);
   const [prediction, setPrediction] = useState<string | null>(null);
   const [showXGTimeline, setShowXGTimeline] = useState(false);
+  const preMatch = computePreMatchWinProbability({
+    homeTeam,
+    awayTeam,
+    homeElo: 1550,
+    awayElo: 1520,
+    homeForm: { lastFiveResults: ['W','W','D','W','W'], avgXgFor: 1.8, avgXgAgainst: 0.9 },
+    awayForm: { lastFiveResults: ['D','W','L','W','D'], avgXgFor: 1.3, avgXgAgainst: 1.2 },
+    isHomeAdvantageEnabled: true,
+  });
 
   const generatePrediction = async () => {
     setLoading(true);
@@ -134,9 +144,9 @@ export const MatchPredictionEngine = ({
           </div>
 
           <div className="text-center px-6">
-            <div className="text-sm text-muted-foreground mb-2">Predicted Score</div>
-            <div className="text-4xl font-bold text-foreground">
-              {mockOppositionReport.expectedScoreline}
+            <div className="text-sm text-muted-foreground mb-2">Win Probability</div>
+            <div className="text-sm font-semibold text-foreground">
+              {homeTeam}: {preMatch.homeWinPct.toFixed(0)}% • Draw {preMatch.drawPct.toFixed(0)}% • {awayTeam}: {preMatch.awayWinPct.toFixed(0)}%
             </div>
           </div>
 

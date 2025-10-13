@@ -4,6 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { MatchResultDetail } from "@/components/MatchResultDetail";
 import { mockMatchResults } from "@/utils/mockData";
 import { IntelAlerts } from "@/components/IntelAlerts";
+import { PreMatchDossier } from "@/components/PreMatchDossier";
+import { OpponentLineup } from "@/components/OpponentLineup";
 
 const MatchDetail = () => {
   const { matchId } = useParams();
@@ -25,6 +27,8 @@ const MatchDetail = () => {
         </Button>
 
         <MatchResultDetail match={match} />
+        <PreMatchDossier homeTeam={match.homeTeam} awayTeam={match.awayTeam} />
+        <OpponentLineup opponent={match.awayTeam} />
         {import.meta.env.VITE_FEATURE_INTEL_ALERTS === "true" && (
           <div>
             <IntelAlerts limit={5} />

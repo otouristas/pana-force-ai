@@ -18,15 +18,18 @@ const navItems: NavItem[] = [
   { icon: Users, label: "Squad", path: "/squad" },
   { icon: Trophy, label: "Competitions", path: "/competitions" },
   { icon: Brain, label: "Tactical Intel", path: "/tactical-intelligence" },
+  { icon: Brain, label: "Dossier", path: "/dossier" },
 ];
 
 export const MobileNav = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const isIntelEnabled = import.meta.env.VITE_FEATURE_INTEL_ALERTS === "true";
+  const isIntelEnabled = true;
+  const showTopMobileBar = false;
 
   return (
     <>
+      {showTopMobileBar && (
       <nav className="md:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="flex items-center justify-between px-4 py-3">
           <Link to="/" className="flex items-center gap-2">
@@ -77,9 +80,10 @@ export const MobileNav = () => {
           </Sheet>
         </div>
       </nav>
+      )}
 
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-t border-border">
-        <div className="grid grid-cols-4 gap-1 px-2 py-2">
+        <div className={cn("grid gap-1 px-2 py-2", isIntelEnabled ? "grid-cols-5" : "grid-cols-4") }>
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -100,6 +104,20 @@ export const MobileNav = () => {
               </Link>
             );
           })}
+          {isIntelEnabled && (
+            <Link
+              to="/intel"
+              className={cn(
+                "flex flex-col items-center justify-center gap-1 py-2 px-3 rounded-lg transition-all",
+                location.pathname === "/intel"
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              )}
+            >
+              <Bell className="w-5 h-5" />
+              <span className="text-xs font-medium">Alerts</span>
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -111,7 +129,7 @@ export const MobileNav = () => {
 
 export const DesktopNav = () => {
   const location = useLocation();
-  const isIntelEnabled = import.meta.env.VITE_FEATURE_INTEL_ALERTS === "true";
+  const isIntelEnabled = true;
 
   return (
     <nav className="hidden md:block sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
@@ -150,10 +168,10 @@ export const DesktopNav = () => {
             })}
             {isIntelEnabled && (
               <Link
-                to="/dashboard"
+                to="/intel"
                 className={cn(
                   "relative flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium",
-                  location.pathname === "/dashboard" ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
+                  location.pathname === "/intel" ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
                 )}
               >
                 <Bell className="w-4 h-4" />

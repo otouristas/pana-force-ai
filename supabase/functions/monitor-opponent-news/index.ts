@@ -50,7 +50,7 @@ async function classifyWithAI(text: string, apiKey?: string) {
   const body = {
     model: 'gpt-4o-mini',
     messages: [
-      { role: 'system', content: 'Classify football intel updates: extract event_type (injury|lineup|travel|disciplinary|weather|other), confidence (0..1), urgency (low|medium|high), entities {players:[], team, opponent} and a concise summary.' },
+      { role: 'system', content: 'Classify football intel updates: extract event_type (injury|lineup|travel|disciplinary|weather|other), confidence (0..1), urgency (low|medium|high), entities {players:[], team, opponent, formation, lineup:[] } and a concise summary. If text includes a probable starting XI or formation, set event_type to lineup_projection and include entities. Respond with compact JSON only.' },
       { role: 'user', content: text.slice(0, 4000) }
     ]
   };

@@ -10,6 +10,7 @@ import { MatchResult, PlayerMatchPerformance } from "@/utils/mockData";
 import { HeatmapVisualization } from "./HeatmapVisualization";
 import { Progress } from "@/components/ui/progress";
 import { format } from "date-fns";
+import { computeInMatchWinProbability, computePreMatchWinProbability } from "@/lib/models/winProbability";
 
 interface MatchResultDetailProps {
   match: MatchResult;
@@ -35,6 +36,22 @@ export const MatchResultDetail = ({ match }: MatchResultDetailProps) => {
   const topPerformers = [...match.playerPerformances]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 3);
+
+  const prematch = computePreMatchWinProbability({
+    homeTeam: match.homeTeam,
+    awayTeam: match.awayTeam,
+    homeElo: 1550,
+    awayElo: 1520,
+    homeForm: { lastFiveResults: ['W','W','D','W','W'], avgXgFor: 1.8, avgXgAgainst: 0.9 },
+    awayForm: { lastFiveResults: ['D','W','L','W','D'], avgXgFor: 1.3, avgXgAgainst: 1.2 },
+    isHomeAdvantageEnabled: true,
+  });
+  const live = computeInMatchWinProbability({
+    minute: 90,
+    homeGoals: match.homeScore,
+    awayGoals: match.awayScore,
+    preMatch: prematch,
+  });
 
   const renderPlayerCard = (player: PlayerMatchPerformance) => (
     <Card key={player.playerId} className="p-4 bg-card/50 border-border hover:border-primary/50 transition-all">
@@ -216,6 +233,9 @@ export const MatchResultDetail = ({ match }: MatchResultDetailProps) => {
                 <span className="text-5xl font-bold text-foreground">{match.awayScore}</span>
               </div>
               <Badge variant="outline" className="text-xs">Full Time</Badge>
+              <div className="text-xs text-muted-foreground">
+                Live win prob: {match.homeTeam} {live.homeWinPct.toFixed(0)}% • Draw {live.drawPct.toFixed(0)}% • {match.awayTeam} {live.awayWinPct.toFixed(0)}%
+              </div>
             </div>
 
             <div className="text-left">

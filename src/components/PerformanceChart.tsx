@@ -18,9 +18,9 @@ export const PerformanceChart = () => {
       
       <div className="space-y-8">
         {/* Distance & Load Chart */}
-        <div>
+        <div className="h-[220px] sm:h-[260px] lg:h-[320px]">
           <h4 className="text-sm font-medium text-muted-foreground mb-4">Distance & Player Load</h4>
-          <ResponsiveContainer width="100%" height={250}>
+          <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={performanceData}>
               <defs>
                 <linearGradient id="colorDistance" x1="0" y1="0" x2="0" y2="1">
@@ -71,9 +71,9 @@ export const PerformanceChart = () => {
         </div>
 
         {/* Recovery Chart */}
-        <div>
+        <div className="h-[200px] sm:h-[240px] lg:h-[300px]">
           <h4 className="text-sm font-medium text-muted-foreground mb-4">Recovery Index</h4>
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height="100%">
             <LineChart data={performanceData}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
               <XAxis 

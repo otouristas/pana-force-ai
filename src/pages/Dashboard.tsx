@@ -9,6 +9,8 @@ import { AdvancedMetrics } from "@/components/AdvancedMetrics";
 import { SoccerField } from "@/components/SoccerField";
 import { HeatmapVisualization } from "@/components/HeatmapVisualization";
 import { WeatherWidget } from "@/components/WeatherWidget";
+import { PassingNetworkChart } from "@/components/PassingNetworkChart";
+import { XThreatHeatmap } from "@/components/XThreatHeatmap";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -41,6 +43,30 @@ const Dashboard = () => {
     { id: '10', name: 'Pellistri', number: 14, x: 75, y: 70 },
     { id: '11', name: 'Sporar', number: 9, x: 85, y: 50 },
   ];
+
+  const passingPlayers = [
+    { id: 'p1', name: 'LB', x: 20, y: 70, usage: 0.5 },
+    { id: 'p2', name: 'CB', x: 30, y: 50, usage: 0.4 },
+    { id: 'p3', name: 'RB', x: 20, y: 30, usage: 0.45 },
+    { id: 'p4', name: 'CM', x: 50, y: 50, usage: 0.7 },
+    { id: 'p5', name: 'LW', x: 70, y: 70, usage: 0.55 },
+    { id: 'p6', name: 'RW', x: 70, y: 30, usage: 0.6 },
+  ];
+
+  const passingEdges = [
+    { from: 'p2', to: 'p4', volume: 0.8, xThreatGain: 0.4 },
+    { from: 'p1', to: 'p4', volume: 0.5, xThreatGain: 0.3 },
+    { from: 'p3', to: 'p4', volume: 0.5, xThreatGain: 0.3 },
+    { from: 'p4', to: 'p5', volume: 0.7, xThreatGain: 0.6 },
+    { from: 'p4', to: 'p6', volume: 0.65, xThreatGain: 0.55 },
+  ];
+
+  const mockEvents = [
+    { x: 30, y: 50, outcome: 'success', type: 'pass' },
+    { x: 55, y: 50, outcome: 'success', type: 'carry' },
+    { x: 70, y: 40, outcome: 'success', type: 'cross' },
+    { x: 80, y: 45, outcome: 'success', type: 'shot' },
+  ] as const;
 
   return (
     <div className="min-h-screen bg-background pb-20 md:pb-8">
@@ -78,6 +104,8 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 gap-6">
               <PerformanceChart />
               <PlayerComparison />
+              <PassingNetworkChart players={passingPlayers} passes={passingEdges} />
+              <XThreatHeatmap events={mockEvents} />
             </div>
           </div>
 
