@@ -59,12 +59,14 @@ export const Hero = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-          <Button 
-            size="lg" 
-            className="bg-gradient-primary hover:shadow-glow transition-all duration-300 text-lg px-8"
-          >
-            View Dashboard
-          </Button>
+          <a href="/dashboard">
+            <Button 
+              size="lg" 
+              className="bg-gradient-primary hover:shadow-glow transition-all duration-300 text-lg px-8"
+            >
+              View Dashboard
+            </Button>
+          </a>
           <Button 
             size="lg" 
             variant="outline"
