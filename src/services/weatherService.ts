@@ -1,4 +1,4 @@
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
 
 export interface WeatherData {
   temperature_celsius: number;
@@ -27,6 +27,7 @@ export interface WeatherImpact {
 
 export const weatherService = {
   async fetchWeatherForMatch(matchId: string): Promise<WeatherData | null> {
+    if (!isSupabaseConfigured) return null;
     const { data, error } = await supabase
       .from('weather_data')
       .select('*')
@@ -43,6 +44,7 @@ export const weatherService = {
   },
 
   async fetchWeatherForecast(matchId: string): Promise<WeatherData | null> {
+    if (!isSupabaseConfigured) return null;
     const { data, error } = await supabase
       .from('weather_data')
       .select('*')
@@ -98,6 +100,7 @@ export const weatherService = {
   },
 
   async saveWeatherData(matchId: string, weatherData: WeatherData, isForecast: boolean = false) {
+    if (!isSupabaseConfigured) return;
     const { error } = await supabase
       .from('weather_data')
       .insert({

@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from "recharts";
 import { mockXGTimeline, mockOppositionReport } from "@/utils/advancedMockData";
 import { AIFormattedText } from "./AIFormattedText";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, isSupabaseConfigured } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface MatchPredictionEngineProps {
@@ -32,6 +32,10 @@ export const MatchPredictionEngine = ({
     setPrediction(null);
 
     try {
+      if (!isSupabaseConfigured) {
+        toast.error("Supabase is not configured.");
+        return;
+      }
       const { data, error } = await supabase.functions.invoke('analyze-performance', {
         body: {
           playerData: {
