@@ -8,6 +8,9 @@ import Dashboard from "./pages/Dashboard";
 import Matches from "./pages/Matches";
 import MatchDetail from "./pages/MatchDetail";
 import Squad from "./pages/Squad";
+import Competitions from "./pages/Competitions";
+import Recruitment from "./pages/Recruitment";
+import TacticalIntelligence from "./pages/TacticalIntelligence";
 import NotFound from "./pages/NotFound";
 import { MobileNav, DesktopNav } from "./components/MobileNav";
 
@@ -27,6 +30,9 @@ const App = () => (
           <Route path="/matches" element={<Matches />} />
           <Route path="/matches/:matchId" element={<MatchDetail />} />
           <Route path="/squad" element={<Squad />} />
+          <Route path="/competitions" element={<Competitions />} />
+          <Route path="/recruitment" element={<Recruitment />} />
+          <Route path="/tactical-intelligence" element={<TacticalIntelligence />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

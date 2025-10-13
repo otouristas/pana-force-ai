@@ -1,4 +1,4 @@
-import { Home, LayoutDashboard, Calendar, Users, Menu, X } from "lucide-react";
+import { Home, LayoutDashboard, Calendar, Users, Menu, X, Trophy, Target, Brain } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,9 @@ const navItems: NavItem[] = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
   { icon: Calendar, label: "Matches", path: "/matches" },
   { icon: Users, label: "Squad", path: "/squad" },
+  { icon: Trophy, label: "Competitions", path: "/competitions" },
+  { icon: Target, label: "Recruitment", path: "/recruitment" },
+  { icon: Brain, label: "Tactical Intel", path: "/tactical-intelligence" },
 ];
 
 export const MobileNav = () => {

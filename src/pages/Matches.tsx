@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { MatchSchedule } from "@/components/MatchSchedule";
 import { WeatherWidget } from "@/components/WeatherWidget";
+import { MatchPredictionEngine } from "@/components/MatchPredictionEngine";
 import { Calendar } from "lucide-react";
 
 const Matches = () => {
@@ -18,6 +19,13 @@ const Matches = () => {
             </p>
           </div>
         </div>
+
+        <MatchPredictionEngine
+          homeTeam="Panathinaikos"
+          awayTeam="Olympiacos"
+          matchDate={new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)}
+          venue="OPAP Arena"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
