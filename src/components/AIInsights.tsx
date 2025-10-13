@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Brain, TrendingUp, AlertCircle, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { AIFormattedText } from "./AIFormattedText";
 
 interface AIInsightsProps {
   playerName: string;
@@ -134,9 +135,7 @@ export const AIInsights = ({ playerName, playerData }: AIInsightsProps) => {
             <h4 className="font-bold text-foreground mb-3 flex items-center gap-2">
               {getAnalysisTitle()}
             </h4>
-            <div className="text-sm text-foreground/90 whitespace-pre-wrap leading-relaxed">
-              {insights}
-            </div>
+            <AIFormattedText text={insights} />
           </div>
         )}
       </div>

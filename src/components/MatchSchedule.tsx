@@ -205,8 +205,13 @@ export const MatchSchedule = ({ matches = mockMatches, showWeather = true }: Mat
 
         {selectedMatch === match.id && match.status === 'finished' && (
           <div className="mt-4 pt-4 border-t border-border space-y-2">
-            <Button variant="outline" size="sm" className="w-full">
-              View Match Analysis
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full"
+              onClick={() => window.location.href = `/matches/${match.id}`}
+            >
+              View Full Match Analysis
             </Button>
             <div className="grid grid-cols-3 gap-2 text-center">
               <div className="p-2 bg-background/50 rounded">

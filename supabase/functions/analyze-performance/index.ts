@@ -1,11 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Client-Info, Apikey',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
 };
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -44,6 +43,24 @@ Provide predictions for distance covered, sprint capacity, and overall match rea
 - Injury prevention
 
 Provide specific training load recommendations and recovery strategies.`;
+    } else if (analysisType === "squad_forecast") {
+      systemPrompt = `You are an AI tactical analyst for Panathinaikos FC. Analyze the entire squad's fitness, form, and fatigue data to recommend the optimal starting XI for the upcoming match. Consider:
+- Player fitness levels and injury risk
+- Recent form and match ratings
+- Fatigue accumulation and recovery status
+- Opponent analysis and tactical matchups
+- Formation suitability for each player
+- Squad rotation needs
+- Match importance and competition
+
+Provide:
+1. **Recommended Starting XI** with positions
+2. **Key Tactical Insights** about the suggested lineup
+3. **Substitution Strategy** for during the match
+4. **Risk Assessment** for each high-risk player
+5. **Alternative Options** if key players are unavailable
+
+Use **bold text** for emphasis, bullet points for lists, and clear sections for different recommendations.`;
     }
 
     console.log("Calling Lovable AI for analysis:", analysisType);

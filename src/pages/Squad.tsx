@@ -4,6 +4,7 @@ import { SoccerField } from "@/components/SoccerField";
 import { HeatmapVisualization } from "@/components/HeatmapVisualization";
 import { PassingNetwork } from "@/components/PassingNetwork";
 import { ShotMap } from "@/components/ShotMap";
+import { AISquadForecast } from "@/components/AISquadForecast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 
@@ -100,13 +101,22 @@ const Squad = () => {
           </Card>
         </div>
 
-        <Tabs defaultValue="formation" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
+        <Tabs defaultValue="forecast" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5">
+            <TabsTrigger value="forecast">AI Forecast</TabsTrigger>
             <TabsTrigger value="formation">Formation</TabsTrigger>
             <TabsTrigger value="heatmap">Heatmap</TabsTrigger>
             <TabsTrigger value="passing">Passing</TabsTrigger>
             <TabsTrigger value="shots">Shots</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="forecast" className="mt-6">
+            <AISquadForecast
+              opponent="Olympiacos"
+              matchDate={new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)}
+              formation="4-2-3-1"
+            />
+          </TabsContent>
 
           <TabsContent value="formation" className="space-y-6 mt-6">
             <SoccerField
