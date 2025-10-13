@@ -111,6 +111,7 @@ export const MobileNav = () => {
 
 export const DesktopNav = () => {
   const location = useLocation();
+  const isIntelEnabled = import.meta.env.VITE_FEATURE_INTEL_ALERTS === "true";
 
   return (
     <nav className="hidden md:block sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
