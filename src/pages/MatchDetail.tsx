@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { MatchResultDetail } from "@/components/MatchResultDetail";
 import { mockMatchResults } from "@/utils/mockData";
+import { IntelAlerts } from "@/components/IntelAlerts";
 
 const MatchDetail = () => {
   const { matchId } = useParams();
@@ -24,6 +25,11 @@ const MatchDetail = () => {
         </Button>
 
         <MatchResultDetail match={match} />
+        {import.meta.env.VITE_FEATURE_INTEL_ALERTS === "true" && (
+          <div>
+            <IntelAlerts limit={5} />
+          </div>
+        )}
       </div>
     </div>
   );

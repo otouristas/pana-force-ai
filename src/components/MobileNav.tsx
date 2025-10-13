@@ -1,4 +1,4 @@
-import { Home, LayoutDashboard, Calendar, Users, Menu, X, Trophy, Target, Brain } from "lucide-react";
+import { Home, LayoutDashboard, Calendar, Users, Menu, X, Trophy, Target, Brain, Bell } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -17,13 +17,13 @@ const navItems: NavItem[] = [
   { icon: Calendar, label: "Matches", path: "/matches" },
   { icon: Users, label: "Squad", path: "/squad" },
   { icon: Trophy, label: "Competitions", path: "/competitions" },
-  { icon: Target, label: "Recruitment", path: "/recruitment" },
   { icon: Brain, label: "Tactical Intel", path: "/tactical-intelligence" },
 ];
 
 export const MobileNav = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const isIntelEnabled = import.meta.env.VITE_FEATURE_INTEL_ALERTS === "true";
 
   return (
     <>
@@ -147,6 +147,19 @@ export const DesktopNav = () => {
                 </Link>
               );
             })}
+            {isIntelEnabled && (
+              <Link
+                to="/dashboard"
+                className={cn(
+                  "relative flex items-center gap-2 px-4 py-2 rounded-lg transition-all font-medium",
+                  location.pathname === "/dashboard" ? "bg-primary text-primary-foreground" : "text-foreground hover:bg-muted"
+                )}
+              >
+                <Bell className="w-4 h-4" />
+                <span>Alerts</span>
+                <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-primary" />
+              </Link>
+            )}
           </div>
         </div>
       </div>
